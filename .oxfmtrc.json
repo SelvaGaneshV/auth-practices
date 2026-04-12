@@ -1,3 +1,6 @@
 {
-  "ignorePatterns": []
+  "ignorePatterns": [],
+  "experimentalTailwindcss": {
+    "stylesheet": "./src/index.css"
+  },
 }
