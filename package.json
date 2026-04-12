@@ -1,0 +1,36 @@
+{
+  "name": "auth-practices",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "type": "module",
+  "scripts": {
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "check-types": "turbo check-types",
+    "dev:web": "turbo -F web dev",
+    "dev:server": "turbo -F server dev",
+    "db:push": "turbo -F @auth-practices/db db:push",
+    "db:studio": "turbo -F @auth-practices/db db:studio",
+    "db:generate": "turbo -F @auth-practices/db db:generate",
+    "db:migrate": "turbo -F @auth-practices/db db:migrate",
+    "db:local": "turbo -F @auth-practices/db db:local",
+    "check": "oxlint && oxfmt --write"
+  },
+  "dependencies": {
+    "@auth-practices/env": "workspace:*",
+    "dotenv": "catalog:",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@auth-practices/config": "workspace:*",
+    "@types/node": "catalog:",
+    "oxfmt": "^0.26.0",
+    "oxlint": "^1.41.0",
+    "turbo": "^2.8.12",
+    "typescript": "^5"
+  },
+  "packageManager": "pnpm@10.11.1"
+}

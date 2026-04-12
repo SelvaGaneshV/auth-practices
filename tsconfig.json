@@ -1,0 +1,3 @@
+{
+  "extends": "@auth-practices/config/tsconfig.base.json"
+}
