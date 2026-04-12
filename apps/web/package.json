@@ -13,10 +13,9 @@
   "dependencies": {
     "@auth-practices/env": "workspace:*",
     "@auth-practices/ui": "workspace:*",
-    "@hookform/resolvers": "^5.1.1",
+    "@hookform/resolvers": "^5.2.2",
     "@libsql/client": "catalog:",
-    "@tailwindcss/vite": "^4.1.18",
-    "@tanstack/react-router": "^1.141.1",
+    "@tanstack/react-router": "^1.168.18",
     "dotenv": "catalog:",
     "libsql": "catalog:",
     "lucide-react": "catalog:",
@@ -28,15 +27,17 @@
   },
   "devDependencies": {
     "@auth-practices/config": "workspace:*",
-    "@tanstack/react-router-devtools": "^1.141.1",
-    "@tanstack/router-plugin": "^1.141.1",
+    "@rolldown/plugin-babel": "^0.2.2",
+    "@tailwindcss/vite": "^4.2.2",
+    "@tanstack/react-router-devtools": "^1.166.13",
+    "@tanstack/router-plugin": "^1.167.18",
     "@types/node": "catalog:",
     "@types/react": "catalog:",
     "@types/react-dom": "catalog:",
-    "@vitejs/plugin-react": "^4.3.4",
-    "postcss": "^8.5.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "postcss": "^8.5.9",
     "tailwindcss": "catalog:",
-    "typescript": "^5",
-    "vite": "^6.2.2"
+    "typescript": "^6.0.2",
+    "vite": "^8.0.8"
   }
 }

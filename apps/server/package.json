@@ -12,16 +12,16 @@
   "dependencies": {
     "@auth-practices/db": "workspace:*",
     "@auth-practices/env": "workspace:*",
-    "@hono/node-server": "^1.14.4",
+    "@hono/node-server": "^1.19.13",
     "dotenv": "catalog:",
-    "hono": "^4.8.2",
+    "hono": "^4.12.12",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@auth-practices/config": "workspace:*",
     "@types/node": "catalog:",
-    "tsdown": "^0.16.5",
-    "tsx": "^4.19.2",
-    "typescript": "^5"
+    "tsdown": "^0.21.7",
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.2"
   }
 }

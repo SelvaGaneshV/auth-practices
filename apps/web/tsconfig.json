@@ -8,12 +8,19 @@
     "moduleResolution": "Bundler",
     "verbatimModuleSyntax": true,
     "skipLibCheck": true,
-    "types": ["vite/client"],
-    "rootDirs": ["."],
-    "baseUrl": ".",
+    "types": [
+      "vite/client"
+    ],
+    "rootDirs": [
+      "."
+    ],
     "paths": {
-      "@/*": ["./src/*"],
-      "@auth-practices/ui/*": ["../../packages/ui/src/*"]
+      "~/*": [
+        "./src/*"
+      ],
+      "@auth-practices/ui/*": [
+        "../../packages/ui/src/*"
+      ]
     }
   }
 }
