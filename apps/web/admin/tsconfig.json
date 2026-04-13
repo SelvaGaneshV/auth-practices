@@ -19,7 +19,7 @@
         "./src/*"
       ],
       "@auth-practices/ui/*": [
-        "../../packages/ui/src/*"
+        "../../../packages/ui/src/*"
       ]
     }
   }

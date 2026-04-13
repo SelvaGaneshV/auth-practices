@@ -1,5 +1,5 @@
 {
-  "name": "server",
+  "name": "@auth-practices/server",
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
@@ -12,13 +12,16 @@
   "dependencies": {
     "@auth-practices/db": "workspace:*",
     "@auth-practices/env": "workspace:*",
-    "@hono/node-server": "^1.19.13",
+    "@hono/node-server": "^1.19.14",
+    "bcryptjs": "^3.0.3",
     "dotenv": "catalog:",
     "hono": "^4.12.12",
+    "jsonwebtoken": "^9.0.3",
     "zod": "catalog:"
   },
   "devDependencies": {
     "@auth-practices/config": "workspace:*",
+    "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "catalog:",
     "tsdown": "^0.21.7",
     "tsx": "^4.21.0",

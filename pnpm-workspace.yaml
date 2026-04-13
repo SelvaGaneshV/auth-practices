@@ -1,5 +1,6 @@
 packages:
   - apps/*
+  - apps/**
   - packages/*
 catalog:
   dotenv: ^17.2.2
@@ -15,3 +16,11 @@ catalog:
   "@types/react": ^19.2.10
   "@types/react-dom": ^19.2.3
   tailwindcss: ^4.1.18
+  "@tanstack/react-router": ^1.168.19
+  "@tanstack/router-plugin": ^1.167.20
+  "babel-plugin-react-compiler": ^1.0.0
+  "postcss": ^8.5.9
+  "@vitejs/plugin-react": ^6.0.1
+  "@rolldown/plugin-babel": ^0.2.2
+  "@tailwindcss/vite": ^4.2.2
+  "vite": ^8.0.8
