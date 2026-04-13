@@ -1,11 +1,14 @@
 import { Toaster } from "@auth-practices/ui/components/sonner";
 import { HeadContent, Outlet, createRootRouteWithContext } from "@tanstack/react-router";
-
 import { ThemeProvider } from "~/components/theme-provider";
-
 import "../index.css";
+import type { QueryClient } from "@tanstack/react-query";
+import type { AuthState } from "~/context/auth";
 
-export interface RouterAppContext {}
+export interface RouterAppContext {
+  queryClient: QueryClient;
+  auth?: AuthState;
+}
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
   component: RootComponent,
@@ -38,9 +41,8 @@ function RootComponent() {
         disableTransitionOnChange
         storageKey="vite-ui-theme"
       >
-        <div className="grid grid-rows-[auto_1fr] h-svh">
-          <Outlet />
-        </div>
+        <Outlet />
+
         <Toaster richColors />
       </ThemeProvider>
     </>

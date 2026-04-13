@@ -1,17 +1,24 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
+  beforeLoad: async ({ context: { auth } }) => {
+    const { ensureAuth, isAuthPending, auth: authState } = auth!;
+    if (isAuthPending) {
+      const r = await ensureAuth();
+      if (!r)
+        throw redirect({
+          to: "/sigin-in",
+        });
+    } else {
+      if (!authState)
+        throw redirect({
+          to: "/sigin-in",
+        });
+    }
+  },
 });
 
 function HomeComponent() {
-  return (
-    <div className="container mx-auto max-w-3xl px-4 py-2">
-      <div className="grid gap-6">
-        <section className="rounded-lg border p-4">
-          <h2 className="mb-2 font-medium">API Status</h2>
-        </section>
-      </div>
-    </div>
-  );
+  return <div className="flex items-center justify-center min-h-screen w-full px-4"></div>;
 }

@@ -1,15 +1,32 @@
-import { RouterProvider, createRouter } from "@tanstack/react-router";
+import { RouterProvider, createRouter, redirect } from "@tanstack/react-router";
 import ReactDOM from "react-dom/client";
+import { MutationCache, QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
-import Loader from "./components/loader";
 import { routeTree } from "./routeTree.gen";
+import { AuthProvider, useAuth } from "./context/auth";
+import { Spinner } from "@auth-practices/ui/components/spinner";
+
+const queryClient = new QueryClient({
+  mutationCache: new MutationCache({
+    onError: (e) => {
+      if (e.message.includes("401")) {
+        redirect({ to: "/sigin-in" });
+      }
+    },
+  }),
+});
 
 const router = createRouter({
   routeTree,
   defaultPreload: "intent",
-  defaultPendingComponent: () => <Loader />,
-  context: {},
+  defaultPendingComponent: () => <Spinner />,
+  context: { queryClient, auth: undefined },
 });
+
+function Main() {
+  const auth = useAuth();
+  return <RouterProvider router={router} context={{ auth }} />;
+}
 
 declare module "@tanstack/react-router" {
   interface Register {
@@ -25,5 +42,11 @@ if (!rootElement) {
 
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
-  root.render(<RouterProvider router={router} />);
+  root.render(
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <Main />
+      </AuthProvider>
+    </QueryClientProvider>,
+  );
 }

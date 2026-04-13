@@ -1,0 +1,21 @@
+{
+  "name": "@auth-practices/api",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
+  },
+  "dependencies": {
+    "@auth-practices/server": "workspace:*",
+    "@auth-practices/env": "workspace:*",
+    "hono": "catalog:"
+  },
+  "devDependencies": {
+    "@auth-practices/config": "workspace:*",
+    "typescript": "^6.0.2"
+  }
+}

@@ -13,9 +13,10 @@
     "@auth-practices/db": "workspace:*",
     "@auth-practices/env": "workspace:*",
     "@hono/node-server": "^1.19.14",
+    "@hono/zod-validator": "^0.7.6",
     "bcryptjs": "^3.0.3",
     "dotenv": "catalog:",
-    "hono": "^4.12.12",
+    "hono": "catalog:",
     "jsonwebtoken": "^9.0.3",
     "zod": "catalog:"
   },

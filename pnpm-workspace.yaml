@@ -24,3 +24,5 @@ catalog:
   "@rolldown/plugin-babel": ^0.2.2
   "@tailwindcss/vite": ^4.2.2
   "vite": ^8.0.8
+  "hono": ^4.12.12
+  "@tanstack/react-query": ^5.99.0

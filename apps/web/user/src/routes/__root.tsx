@@ -4,8 +4,13 @@ import { HeadContent, Outlet, createRootRouteWithContext } from "@tanstack/react
 import { ThemeProvider } from "~/components/theme-provider";
 
 import "../index.css";
+import type { QueryClient } from "@tanstack/react-query";
+import type { AuthState } from "~/context/auth";
 
-export interface RouterAppContext {}
+export interface RouterAppContext {
+  queryClient: QueryClient;
+  auth?: AuthState;
+}
 
 export const Route = createRootRouteWithContext<RouterAppContext>()({
   component: RootComponent,
