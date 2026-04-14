@@ -1,4 +1,5 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { Organisations } from "~/components/organisations";
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
@@ -20,5 +21,9 @@ export const Route = createFileRoute("/")({
 });
 
 function HomeComponent() {
-  return <div className="flex items-center justify-center min-h-screen w-full px-4"></div>;
+  return (
+    <div className="flex items-center justify-center min-h-screen w-full px-4">
+      <Organisations />
+    </div>
+  );
 }

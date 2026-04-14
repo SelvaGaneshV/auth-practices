@@ -5,6 +5,9 @@ import { getCookie, setCookie } from "hono/cookie";
 import { createMiddleware } from "hono/factory";
 import { zValidator } from "@hono/zod-validator";
 import z from "zod";
+import { eq } from "drizzle-orm";
+import { db } from "@auth-practices/db";
+import { organizations } from "@auth-practices/db/schema/index";
 
 const superAdminAuthMiddleware = createMiddleware<{
   Variables: {
@@ -50,4 +53,36 @@ export const superAdmin = new Hono()
       return c.json({ message: "Invalid credentials" }, 401);
     },
   )
-  .get("/introspect", superAdminAuthMiddleware, (c) => c.json({ auth: !!c.var.user }));
+  .get("/introspect", superAdminAuthMiddleware, (c) => c.json({ auth: !!c.var.user }))
+  .post(
+    "/create-org",
+    superAdminAuthMiddleware,
+    zValidator(
+      "json",
+      z.object({
+        orgCode: z
+          .string()
+          .transform((val) => val.toUpperCase())
+          .refine((val) => /^OG\d+$/.test(val), {
+            message: "Must start with 'OG' followed by only numbers",
+          }),
+        orgName: z.string().min(1, "Organisation name is required"),
+      }),
+    ),
+    async (c) => {
+      const { orgCode, orgName } = c.req.valid("json");
+      const exist = await db.query.organizations
+        .findFirst({
+          where: (v) => eq(v.code, orgCode),
+        })
+        .then((r) => !!r);
+      if (exist) return c.json({ message: "organisation code taken" }, 400);
+      const posted = await db
+        .insert(organizations)
+        .values({ code: orgCode, name: orgName })
+        .then((r) => !!r);
+      if (!posted)
+        return c.json({ message: "something went wrong when creating organisation" }, 500);
+      return c.json({ posted });
+    },
+  );
