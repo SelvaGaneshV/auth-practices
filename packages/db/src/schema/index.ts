@@ -6,7 +6,7 @@ export const organizations = sqliteTable(
     id: text("id")
       .primaryKey()
       .$defaultFn(() => crypto.randomUUID()),
-    code: text().unique().notNull(),
+    code: text('code').unique().notNull(),
     name: text("name").notNull(),
     createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
   },
