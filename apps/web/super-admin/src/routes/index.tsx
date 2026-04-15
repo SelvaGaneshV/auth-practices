@@ -1,8 +1,15 @@
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import z from "zod";
 import { Organisations } from "~/components/organisations";
+import { OrgansationsTable } from "~/components/organisations/organisations-table";
+const serachSchema = z.object({
+  page: z.number().min(1).default(1),
+  pagesize: z.number().min(5).default(5),
+});
 
 export const Route = createFileRoute("/")({
   component: HomeComponent,
+  validateSearch: serachSchema,
   beforeLoad: async ({ context: { auth } }) => {
     const { ensureAuth, isAuthPending, auth: authState } = auth!;
     if (isAuthPending) {
@@ -22,8 +29,11 @@ export const Route = createFileRoute("/")({
 
 function HomeComponent() {
   return (
-    <div className="flex items-center justify-center min-h-screen w-full px-4">
-      <Organisations />
+    <div className="min-h-screen flex items-center justify-center w-full">
+      <div className="h-full max-w-3xl px-4 gap-2.5 flex flex-col items-center justify-center">
+        <Organisations />
+        <OrgansationsTable />
+      </div>
     </div>
   );
 }

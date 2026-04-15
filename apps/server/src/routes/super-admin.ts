@@ -1,13 +1,13 @@
-import { Hono } from "hono";
-import { env } from "@auth-practices/env/server";
-import { signToken, verifyToken } from "~/utils/jwt";
-import { getCookie, setCookie } from "hono/cookie";
-import { createMiddleware } from "hono/factory";
-import { zValidator } from "@hono/zod-validator";
-import z from "zod";
-import { eq } from "drizzle-orm";
 import { db } from "@auth-practices/db";
 import { organizations } from "@auth-practices/db/schema/index";
+import { env } from "@auth-practices/env/server";
+import { zValidator } from "@hono/zod-validator";
+import { eq, sql } from "drizzle-orm";
+import { Hono } from "hono";
+import { getCookie, setCookie } from "hono/cookie";
+import { createMiddleware } from "hono/factory";
+import z from "zod";
+import { signToken, verifyToken } from "~/utils/jwt";
 
 const superAdminAuthMiddleware = createMiddleware<{
   Variables: {
@@ -84,5 +84,45 @@ export const superAdmin = new Hono()
       if (!posted)
         return c.json({ message: "something went wrong when creating organisation" }, 500);
       return c.json({ posted });
+    },
+  )
+  .get(
+    "/get-orgs-list",
+    zValidator(
+      "query",
+      z.object({
+        page: z.coerce.number().min(1).default(1),
+        pagesize: z.coerce.number().min(5).default(5),
+      }),
+    ),
+    superAdminAuthMiddleware,
+    async (c) => {
+      const { page, pagesize } = c.req.valid("query");
+      const [list, totalResult] = await Promise.all([
+        db
+          .select({
+            name: organizations.name,
+            code: organizations.code,
+            createdAt: organizations.createdAt,
+          })
+          .from(organizations)
+          .limit(pagesize)
+          .offset((page - 1) * pagesize),
+
+        db.select({ count: sql<number>`count(*)` }).from(organizations),
+      ]);
+
+      const total = Number(totalResult[0]?.count ?? 0);
+      const totalPages = Math.ceil(total / pagesize);
+
+      return c.json({
+        data: list,
+        meta: {
+          page,
+          pagesize,
+          total,
+          totalPages,
+        },
+      });
     },
   );

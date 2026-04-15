@@ -17,6 +17,7 @@ import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { parseResponse, rpc } from "@auth-practices/api";
+import { useState } from "react";
 
 export const organisationSchema = z.object({
   orgCode: z
@@ -29,6 +30,7 @@ export const organisationSchema = z.object({
 });
 export const AddOrganisation = () => {
   const queryClient = useQueryClient();
+  const [open, setOpen] = useState(false);
   const { mutateAsync } = useMutation({
     mutationFn: async (v: { orgCode: string; orgName: string }) =>
       await parseResponse(rpc["super-admin"]["create-org"].$post({ json: v })),
@@ -46,10 +48,17 @@ export const AddOrganisation = () => {
     },
     onSubmit: async ({ value }) => {
       await mutateAsync(value);
+      setOpen(false);
     },
   });
   return (
-    <Dialog>
+    <Dialog
+      open={open}
+      onOpenChange={(o) => {
+        form.reset();
+        setOpen(o);
+      }}
+    >
       <DialogTrigger render={<Button variant="default">Create Organisation</Button>} />
       <DialogContent className="sm:max-w-sm">
         <form
@@ -113,7 +122,7 @@ export const AddOrganisation = () => {
             <form.Subscribe selector={(s) => [s.canSubmit, s.isSubmitting]}>
               {([canSubmit, isSubmitting]) => (
                 <Button type="submit" disabled={!canSubmit}>
-                  {isSubmitting ? <Spinner /> : "Create Organisation"}
+                  {isSubmitting ? <Spinner /> : "Create"}
                 </Button>
               )}
             </form.Subscribe>
