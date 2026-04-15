@@ -13,7 +13,7 @@ const app = new Hono()
     cors({
       origin: [env.SUPER_ADMIN_CORS_ORGIN, env.ADMIN_CORS_ORGIN, env.USER_CORS_ORGIN],
       credentials: true,
-      allowMethods: ["GET", "POST", "OPTIONS"],
+      allowMethods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
     }),
   )
   .use(
@@ -30,7 +30,7 @@ const app = new Hono()
     cors({
       origin: env.ADMIN_CORS_ORGIN,
       credentials: true,
-      allowMethods: ["GET", "POST", "OPTIONS"],
+      allowMethods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
     }),
   )
   .route("/admin", admin);

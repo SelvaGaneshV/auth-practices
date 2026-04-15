@@ -29,13 +29,33 @@ export const users = sqliteTable(
     email: text("email").notNull(),
     name: text("name").notNull(),
     password: text("password").notNull(),
-    organizationId: text("organization_id").references(() => organizations.id, {
-      onDelete: "cascade",
-    }),
+    organizationId: text("organization_id")
+      .notNull()
+      .references(() => organizations.id, {
+        onDelete: "cascade",
+      }),
     roleId: text("role_id")
       .notNull()
       .references(() => roles.id),
     createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
   },
   (table) => [index("user_name_idx").on(table.name), uniqueIndex("email_idx").on(table.email)],
+);
+
+export const featureFlags = sqliteTable(
+  "feature_flags",
+  {
+    id: text("id")
+      .primaryKey()
+      .$defaultFn(() => crypto.randomUUID()),
+    organizationId: text("organization_id")
+      .notNull()
+      .references(() => organizations.id, {
+        onDelete: "cascade",
+      }),
+    isEnabled: integer("is_enabled", { mode: "boolean" }).notNull(),
+    featureKey: text("feature_key").unique().notNull(),
+    createdAt: integer("created_at", { mode: "timestamp" }).$defaultFn(() => new Date()),
+  },
+  (t) => [uniqueIndex("feature_key_idx").on(t.featureKey)],
 );
