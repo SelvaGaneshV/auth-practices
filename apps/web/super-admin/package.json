@@ -14,7 +14,7 @@
     "@auth-practices/api": "workspace:*",
     "@auth-practices/env": "workspace:*",
     "@auth-practices/ui": "workspace:*",
-    "@tanstack/react-form": "^1.29.0",
+    "@tanstack/react-form": "catalog:",
     "@tanstack/react-query": "catalog:",
     "@tanstack/react-router": "catalog:",
     "lucide-react": "catalog:",

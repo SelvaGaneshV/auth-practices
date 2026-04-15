@@ -17,7 +17,7 @@ export const roles = sqliteTable("roles", {
   id: text("id")
     .primaryKey()
     .$defaultFn(() => crypto.randomUUID()),
-  name: text("role").notNull(),
+  role: text("role").notNull(),
 });
 
 export const users = sqliteTable(

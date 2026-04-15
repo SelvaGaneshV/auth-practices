@@ -4,27 +4,12 @@ import { env } from "@auth-practices/env/server";
 import { zValidator } from "@hono/zod-validator";
 import { eq, sql } from "drizzle-orm";
 import { Hono } from "hono";
-import { getCookie, setCookie } from "hono/cookie";
-import { createMiddleware } from "hono/factory";
+import { setCookie } from "hono/cookie";
 import z from "zod";
-import { signToken, verifyToken } from "~/utils/jwt";
-
-const superAdminAuthMiddleware = createMiddleware<{
-  Variables: {
-    user: { name: string; role: string };
-  };
-}>(async (c, next) => {
-  const token = getCookie(c, "a_tk");
-  if (!token) return c.json({ message: "Invalid credentials" }, 401);
-  try {
-    const user = verifyToken(token);
-    c.set("user", user as any);
-    await next();
-  } catch (e) {
-    console.error(e);
-    return c.json({ message: "Invalid credentials" }, 401);
-  }
-});
+import { authMiddleware } from "~/middleware/auth-middleware";
+import { superAdminAuthMiddleware } from "~/middleware/super-admin-auth-middleware";
+import { orgCodeSchema } from "~/schema";
+import { signToken } from "~/utils/jwt";
 
 export const superAdmin = new Hono()
   .post(
@@ -40,12 +25,13 @@ export const superAdmin = new Hono()
       const { name, password } = c.req.valid("json");
       if (env.SUPER_ADMIN === name && env.SUPER_ADMIN_PASS === password) {
         const token = signToken({
-          name: env.SUPER_ADMIN,
+          id: "super_admin",
+          name,
           role: "SPR_ADMIN",
         });
         setCookie(c, "a_tk", token, {
           httpOnly: true,
-          sameSite: "Lax",
+          sameSite: "Strict",
           secure: env.NODE_ENV === "production" ? true : false,
         });
         return c.json({ auth: true });
@@ -53,19 +39,15 @@ export const superAdmin = new Hono()
       return c.json({ message: "Invalid credentials" }, 401);
     },
   )
-  .get("/introspect", superAdminAuthMiddleware, (c) => c.json({ auth: !!c.var.user }))
+  .use(authMiddleware)
+  .use(superAdminAuthMiddleware)
+  .get("/introspect", (c) => c.json({ auth: !!c.var.user }))
   .post(
     "/create-org",
-    superAdminAuthMiddleware,
     zValidator(
       "json",
       z.object({
-        orgCode: z
-          .string()
-          .transform((val) => val.toUpperCase())
-          .refine((val) => /^OG\d+$/.test(val), {
-            message: "Must start with 'OG' followed by only numbers",
-          }),
+        orgCode: orgCodeSchema,
         orgName: z.string().min(1, "Organisation name is required"),
       }),
     ),
@@ -95,7 +77,7 @@ export const superAdmin = new Hono()
         pagesize: z.coerce.number().min(5).default(5),
       }),
     ),
-    superAdminAuthMiddleware,
+
     async (c) => {
       const { page, pagesize } = c.req.valid("query");
       const [list, totalResult] = await Promise.all([

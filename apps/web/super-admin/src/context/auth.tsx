@@ -7,7 +7,7 @@ export interface AuthState {
   auth?: boolean;
   ensureAuth: () => Promise<
     | {
-        auth: true;
+        auth: boolean;
       }
     | undefined
   >;

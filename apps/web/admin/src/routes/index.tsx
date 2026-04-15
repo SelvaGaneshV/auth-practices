@@ -8,12 +8,12 @@ export const Route = createFileRoute("/")({
       const r = await ensureAuth();
       if (!r)
         throw redirect({
-          to: "/login",
+          to: "/sign-in",
         });
     } else {
       if (!authState)
         throw redirect({
-          to: "/login",
+          to: "/sign-in",
         });
     }
   },

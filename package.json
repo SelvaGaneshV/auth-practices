@@ -16,6 +16,7 @@
     "db:studio": "turbo -F @auth-practices/db db:studio",
     "db:generate": "turbo -F @auth-practices/db db:generate",
     "db:migrate": "turbo -F @auth-practices/db db:migrate",
+    "db:seed": "turbo -F @auth-practices/server db:seed",
     "db:local": "turbo -F @auth-practices/db db:local",
     "check": "oxlint && oxfmt --write"
   },

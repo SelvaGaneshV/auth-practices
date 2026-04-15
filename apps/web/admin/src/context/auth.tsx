@@ -1,12 +1,13 @@
 import { queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, type FC, type ReactNode } from "react";
 import { rpc, parseResponse } from "@auth-practices/api";
+
 export interface AuthState {
   isAuthPending: boolean;
   auth?: boolean;
   ensureAuth: () => Promise<
     | {
-        auth: true;
+        auth: boolean;
       }
     | undefined
   >;
@@ -16,12 +17,14 @@ const AuthContext = createContext<AuthState | null>(null);
 
 const authOptions = queryOptions({
   queryKey: ["auth"],
-  queryFn: async () => await parseResponse(rpc["super-admin"].introspect.$get()),
+  queryFn: async () => await parseResponse(rpc.admin.introspect.$get()),
   throwOnError: false,
+  staleTime: 1000 * 60 * 60,
   retry: false,
 });
 export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
   const queryClient = useQueryClient();
+
   const { isPending, data } = useQuery(authOptions);
 
   const ensureAuth = async () => {
@@ -32,6 +35,7 @@ export const AuthProvider: FC<{ children: ReactNode }> = ({ children }) => {
       return undefined;
     }
   };
+
   return (
     <AuthContext.Provider value={{ isAuthPending: isPending, auth: data?.auth, ensureAuth }}>
       {children}

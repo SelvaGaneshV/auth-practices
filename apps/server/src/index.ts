@@ -1,11 +1,21 @@
 import { env } from "@auth-practices/env/server";
+import { serve } from "@hono/node-server";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
 import { logger } from "hono/logger";
-import { serve } from "@hono/node-server";
+import { admin } from "./routes/admin";
 import { superAdmin } from "./routes/super-admin";
+
 const app = new Hono()
   .use(logger())
+  .use(
+    "/*",
+    cors({
+      origin: [env.SUPER_ADMIN_CORS_ORGIN, env.ADMIN_CORS_ORGIN, env.USER_CORS_ORGIN],
+      credentials: true,
+      allowMethods: ["GET", "POST", "OPTIONS"],
+    }),
+  )
   .use(
     "/super-admin/*",
     cors({
@@ -14,7 +24,16 @@ const app = new Hono()
       allowMethods: ["GET", "POST", "OPTIONS"],
     }),
   )
-  .route("/super-admin", superAdmin);
+  .route("/super-admin", superAdmin)
+  .use(
+    "/admin/*",
+    cors({
+      origin: env.ADMIN_CORS_ORGIN,
+      credentials: true,
+      allowMethods: ["GET", "POST", "OPTIONS"],
+    }),
+  )
+  .route("/admin", admin);
 
 serve(
   {
