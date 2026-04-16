@@ -4,7 +4,7 @@ import { zValidator } from "@hono/zod-validator";
 import { and, eq, sql } from "drizzle-orm";
 import { Hono } from "hono";
 import { setCookie } from "hono/cookie";
-import { env } from "process";
+import { env } from "@auth-practices/env/server";
 import z from "zod";
 import { adminAuthMiddleware } from "../middleware/admin-auth-middleware";
 import { authMiddleware } from "../middleware/auth-middleware";

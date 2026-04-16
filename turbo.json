@@ -47,5 +47,15 @@
     "db:seed": {
       "cache": false
     }
-  }
+  },
+  "globalEnv": [
+    "SECRET",
+    "SUPER_ADMIN",
+    "SUPER_ADMIN_PASS",
+    "SUPER_ADMIN_CORS_ORGIN",
+    "ADMIN_CORS_ORGIN",
+    "USER_CORS_ORGIN",
+    "DATABASE_AUTH_TOKEN",
+    "DATABASE_URL"
+  ]
 }
