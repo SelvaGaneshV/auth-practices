@@ -6,9 +6,11 @@
     "jsx": "react-jsx",
     "jsxImportSource": "hono/jsx",
     "paths": {
-      "@auth-practices/api/*": [
-        "../../../packages/api/src/*"
-      ]
+      "@auth-practices/api": ["../../packages/api/src/index.ts"],
+      "@auth-practices/db": ["../../packages/db/src/index.ts"],
+      "@auth-practices/db/schema/index": ["../../packages/db/src/schema/index.ts"],
+      "@auth-practices/env/server": ["../../packages/env/src/server.ts"],
+      "@auth-practices/env/web": ["../../packages/env/src/web.ts"]
     }
   },
   "exclude": [

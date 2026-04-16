@@ -3,11 +3,14 @@
   "type": "module",
   "exports": {
     ".": {
-      "default": "./src/index.ts"
-    },
-    "./*": {
-      "default": "./src/*.ts"
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     }
+  },
+  "scripts": {
+    "build": "tsdown"
   },
   "dependencies": {
     "@auth-practices/db": "workspace:*",
@@ -23,6 +26,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "catalog:",
     "@auth-practices/config": "workspace:*",
+    "tsdown": "^0.21.7",
     "typescript": "^6.0.2"
   }
 }

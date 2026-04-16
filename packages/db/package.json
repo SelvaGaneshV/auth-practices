@@ -3,13 +3,20 @@
   "type": "module",
   "exports": {
     ".": {
-      "default": "./src/index.ts"
+      "development": "./src/index.ts",
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
     },
-    "./*": {
-      "default": "./src/*.ts"
+    "./schema/index": {
+      "development": "./src/schema/index.ts",
+      "types": "./dist/schema/index.d.ts",
+      "import": "./dist/schema/index.js",
+      "default": "./dist/schema/index.js"
     }
   },
   "scripts": {
+    "build": "tsdown",
     "db:local": "node -e \"console.log('Local SQLite: set DATABASE_URL=file:local.db and DATABASE_AUTH_TOKEN= in apps/server/.env, then run pnpm db:migrate')\"",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
@@ -27,6 +34,7 @@
   "devDependencies": {
     "@auth-practices/config": "workspace:*",
     "drizzle-kit": "^0.31.10",
+    "tsdown": "^0.21.7",
     "typescript": "^6.0.2"
   }
 }

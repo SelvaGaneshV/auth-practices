@@ -4,8 +4,16 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./server": "./src/server.ts",
+    "./server": {
+      "development": "./src/server.ts",
+      "types": "./dist/server.d.ts",
+      "import": "./dist/server.js",
+      "default": "./dist/server.js"
+    },
     "./web": "./src/web.ts"
+  },
+  "scripts": {
+    "build": "tsdown"
   },
   "dependencies": {
     "@t3-oss/env-core": "^0.13.11",
@@ -15,6 +23,7 @@
   "devDependencies": {
     "@auth-practices/config": "workspace:*",
     "@types/node": "catalog:",
+    "tsdown": "^0.21.7",
     "typescript": "^6.0.2"
   }
 }
