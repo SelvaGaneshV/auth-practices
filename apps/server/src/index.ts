@@ -13,6 +13,5 @@ app.get("/", (c) => c.text("Hello world"));
 
 app.route("/", api);
 
-export const runtime = "nodejs";
 export const includeFiles = "../../packages/**";
 export default handle(app);
