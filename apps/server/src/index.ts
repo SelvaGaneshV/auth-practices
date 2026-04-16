@@ -1,5 +1,7 @@
 import { createApi } from "@auth-practices/api";
-import { handle } from "hono/vercel";
-const app = createApi();
+import { Hono } from "hono";
+const api = createApi();
 
-export default handle(app);
+const app = new Hono().route("/*", api);
+
+export default app;
