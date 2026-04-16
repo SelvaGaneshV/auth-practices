@@ -9,8 +9,10 @@ const api = createApi({
   USER_CORS_ORGIN: env.USER_CORS_ORGIN,
 });
 
-const app = new Hono().get("/", (c) => c.text("Hello world"));
+const app = new Hono();
 
-api.route("*", app);
+app.get("/", (c) => c.text("Hello world"));
 
-export default handle(api);
+app.route("/", api);
+
+export default handle(app);
