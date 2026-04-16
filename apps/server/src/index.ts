@@ -1,6 +1,6 @@
 import { createApi } from "@auth-practices/api";
 import { Hono } from "hono";
-import { handle } from "hono/vercel";
+
 import { env } from "@auth-practices/env/server";
 if (!env.SUPER_ADMIN_CORS_ORGIN) {
   throw new Error("Missing SUPER_ADMIN_CORS_ORGIN");
@@ -14,4 +14,5 @@ app.get("/", (c) => c.text("Hello world"));
 app.route("/", api);
 
 export const includeFiles = "../../packages/**";
-export default handle(app);
+
+export default app;
