@@ -3,6 +3,8 @@ import { createEnv } from "@t3-oss/env-core";
 import { z } from "zod";
 
 export const env = createEnv({
+  clientPrefix: "",
+  client: {},
   server: {
     DATABASE_URL: z.string().min(1),
     SUPER_ADMIN_CORS_ORGIN: z.url(),
