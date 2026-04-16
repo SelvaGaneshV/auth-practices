@@ -40,5 +40,3 @@ export const createApi = (config: {
 
   return app;
 };
-
-export type ApiType = ReturnType<typeof createApi>;

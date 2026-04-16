@@ -1,4 +1,4 @@
-import type { ApiType } from "@auth-practices/api";
+import type { ApiType } from "@auth-practices/api/rpc";
 import { env } from "@auth-practices/env/web";
 import { hc, parseResponse, type DetailedError } from "hono/client";
 
