@@ -10,6 +10,7 @@ const api = createApi({
 });
 
 const app = new Hono().get("/", (c) => c.text("Hello world"));
+
 api.route("*", app);
 
 export default handle(api);
