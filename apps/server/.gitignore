@@ -2,8 +2,6 @@
 dist/
 /build
 /out/
-app.mjs
-app.mjs.map
 
 # dev
 .yarn/
