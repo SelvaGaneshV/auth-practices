@@ -7,6 +7,5 @@ export default defineConfig({
   clean: true,
   deps: {
     alwaysBundle: [/@auth-practices\/.*/],
-    onlyBundle: ["Hono"],
   },
 });
