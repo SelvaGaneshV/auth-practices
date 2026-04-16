@@ -1,10 +1,11 @@
 import { defineConfig } from "tsdown";
 
 export default defineConfig({
-  entry: { app: "./src/index.ts" },
+  entry: "./src/index.ts",
   format: "esm",
-  outDir: "./",
-  clean: false,
-  external: ["hono"],
-  noExternal: [/@auth-practices\/.*/],
+  outDir: "./dist",
+  clean: true,
+  deps: {
+    alwaysBundle: [/@auth-practices\/.*/],
+  },
 });
