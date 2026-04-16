@@ -8,6 +8,6 @@ const api = createApi({
   USER_CORS_ORGIN: env.USER_CORS_ORGIN,
 });
 
-const app = new Hono().route("/*", api);
+const app = new Hono().route("", api);
 
 export default app;
