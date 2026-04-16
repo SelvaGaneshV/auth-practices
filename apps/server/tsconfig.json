@@ -4,7 +4,14 @@
     "composite": true,
     "outDir": "./dist",
     "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx"
+    "jsxImportSource": "hono/jsx",
+    "paths": {
+      "@auth-practices/api/*": [
+        "../../../packages/api/src/*"
+      ]
+    }
   },
-  "exclude": ["node_modules"]
+  "exclude": [
+    "node_modules"
+  ]
 }
