@@ -5,6 +5,5 @@ export default defineConfig({
   format: "esm",
   outDir: "./dist",
   clean: true,
-  external: ["hono"],
   noExternal: [/@auth-practices\/.*/],
 });
