@@ -10,6 +10,7 @@ export const env = createEnv({
     USER_CORS_ORGIN: z.url(),
     SUPER_ADMIN: z.string(),
     SUPER_ADMIN_PASS: z.string(),
+    DATABASE_AUTH_TOKEN: z.string(),
     SECRET: z.string(),
     NODE_ENV: z.enum(["development", "production", "test"]).default("development"),
   },
