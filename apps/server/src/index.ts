@@ -5,11 +5,7 @@ import { env } from "@auth-practices/env/server";
 if (!env.SUPER_ADMIN_CORS_ORGIN) {
   throw new Error("Missing SUPER_ADMIN_CORS_ORGIN");
 }
-const api = createApi({
-  SUPER_ADMIN_CORS_ORGIN: env.SUPER_ADMIN_CORS_ORGIN,
-  ADMIN_CORS_ORGIN: env.ADMIN_CORS_ORGIN,
-  USER_CORS_ORGIN: env.USER_CORS_ORGIN,
-});
+const api = createApi();
 
 const app = new Hono();
 
