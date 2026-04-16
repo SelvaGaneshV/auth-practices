@@ -1,6 +1,6 @@
 import type { ApiType } from "@auth-practices/api";
 import { env } from "@auth-practices/env/web";
-import { hc, parseResponse, type DetailedError } from "hono/client";
+import { parseResponse, hc, type DetailedError } from "hono/client";
 
 const rpc = hc<ApiType>(env.VITE_SERVER_URL, {
   init: {

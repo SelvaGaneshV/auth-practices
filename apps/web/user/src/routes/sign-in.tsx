@@ -30,7 +30,7 @@ function RouteComponent() {
   const [showPass, setShowPass] = useState(false);
   const { mutateAsync } = useMutation({
     mutationFn: async (v: { email: string; password: string; orgCode: string }) =>
-      await parseResponse(rpc.admin["sigin-in"].$post({ json: v })),
+      await parseResponse(rpc.user["sigin-in"].$post({ json: v })),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["auth"], exact: true });
     },

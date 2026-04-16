@@ -29,7 +29,7 @@ export const superAdmin = new Hono()
           name,
           role: "SPR_ADMIN",
         });
-        setCookie(c, "a_tk", token, {
+        setCookie(c, "sa_a_tk", token, {
           httpOnly: true,
           sameSite: "Strict",
           secure: env.NODE_ENV === "production" ? true : false,
@@ -39,8 +39,8 @@ export const superAdmin = new Hono()
       return c.json({ message: "Invalid credentials" }, 401);
     },
   )
-  .use(authMiddleware)
   .use(superAdminAuthMiddleware)
+  .use(authMiddleware)
   .get("/introspect", (c) => c.json({ auth: !!c.var.user }))
   .post(
     "/create-org",

@@ -48,7 +48,7 @@ function RouteComponent() {
   const [showPass, setShowPass] = useState(false);
   const { mutateAsync } = useMutation({
     mutationFn: async (v: { name: string; email: string; password: string; orgCode: string }) =>
-      await parseResponse(rpc.admin["sign-up"].$post({ json: v })),
+      await parseResponse(rpc.user["sign-up"].$post({ json: v })),
 
     onSuccess: () => {
       toast.success("Account created successfully");

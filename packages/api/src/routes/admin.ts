@@ -66,7 +66,7 @@ export const admin = new Hono()
       if (user && user.length === 1 && user[0]) {
         const token = signToken({ name, id: user[0].id, role: "ORG_ADMIN" });
 
-        setCookie(c, "a_tk", token, {
+        setCookie(c, "a_a_tk", token, {
           httpOnly: true,
           sameSite: "Strict",
           secure: env.NODE_ENV === "production" ? true : false,
@@ -103,16 +103,27 @@ export const admin = new Hono()
           id: true,
           name: true,
           password: true,
+          roleId: true,
         },
       });
       if (!user) return c.json({ message: "User not found" }, 404);
 
+      const userRole = await db.query.roles.findFirst({
+        where: (t) => eq(t.id, user.roleId),
+        columns: {
+          role: true,
+        },
+      });
+      if (!userRole || userRole.role !== "ORG_ADMIN")
+        return c.json({ message: "Not Permitted" }, 403);
+
       const isSameUser = await comparePassword(password, user.password);
+
       if (!isSameUser) return c.json({ message: "Invalid Crential" }, 401);
 
       const token = signToken({ name: user.name, id: user.id, role: "ORG_ADMIN" });
 
-      setCookie(c, "a_tk", token, {
+      setCookie(c, "a_a_tk", token, {
         httpOnly: true,
         sameSite: "Strict",
         secure: env.NODE_ENV === "production" ? true : false,
@@ -121,8 +132,8 @@ export const admin = new Hono()
       return c.json({ auth: true });
     },
   )
-  .use(authMiddleware)
   .use(adminAuthMiddleware)
+  .use(authMiddleware)
   .get("/introspect", (c) => c.json({ auth: !!c.var.user }))
   .post(
     "/create-feature-flag",

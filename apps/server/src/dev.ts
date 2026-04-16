@@ -1,12 +1,7 @@
-import { serve } from "@hono/node-server";
-import { env } from "@auth-practices/env/server";
 import { createApi } from "@auth-practices/api";
+import { serve } from "@hono/node-server";
 
-const app = createApi({
-  SUPER_ADMIN_CORS_ORGIN: env.SUPER_ADMIN_CORS_ORGIN,
-  ADMIN_CORS_ORGIN: env.ADMIN_CORS_ORGIN,
-  USER_CORS_ORGIN: env.USER_CORS_ORGIN,
-});
+const app = createApi();
 
 serve(
   {

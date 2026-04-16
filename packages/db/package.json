@@ -10,7 +10,7 @@
     }
   },
   "scripts": {
-    "db:local": "turso dev --db-file local.db",
+    "db:local": "node -e \"console.log('Local SQLite: set DATABASE_URL=file:local.db and DATABASE_AUTH_TOKEN= in apps/server/.env, then run pnpm db:migrate')\"",
     "db:push": "drizzle-kit push",
     "db:generate": "drizzle-kit generate",
     "db:studio": "drizzle-kit studio",

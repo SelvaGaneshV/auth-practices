@@ -10,6 +10,7 @@ import { authMiddleware } from "../middleware/auth-middleware";
 import { orgCodeSchema } from "../schema";
 import { comparePassword, hashPassword } from "../utils/hash";
 import { signToken } from "../utils/jwt";
+import { userAuthMiddleware } from "../middleware/user-auth-middleware";
 
 export const user = new Hono()
   .post(
@@ -65,7 +66,7 @@ export const user = new Hono()
       if (user && user.length === 1 && user[0]) {
         const token = signToken({ name, id: user[0].id, role: "ORG_USER" });
 
-        setCookie(c, "a_tk", token, {
+        setCookie(c, "u_a_tk", token, {
           httpOnly: true,
           sameSite: "Strict",
           secure: env.NODE_ENV === "production" ? true : false,
@@ -111,7 +112,7 @@ export const user = new Hono()
 
       const token = signToken({ name: user.name, id: user.id, role: "ORG_USER" });
 
-      setCookie(c, "a_tk", token, {
+      setCookie(c, "u_a_tk", token, {
         httpOnly: true,
         sameSite: "Strict",
         secure: env.NODE_ENV === "production" ? true : false,
@@ -120,7 +121,9 @@ export const user = new Hono()
       return c.json({ auth: true });
     },
   )
+  .use(userAuthMiddleware)
   .use(authMiddleware)
+  .get("/introspect", (c) => c.json({ auth: !!c.var.user }))
   .get(
     "/feature/check/:key",
     zValidator(
@@ -131,9 +134,18 @@ export const user = new Hono()
     ),
 
     async (c) => {
+      const { id } = c.var.user;
       const { key } = c.req.valid("param");
+      const org = await db.query.users.findFirst({
+        where: (t) => eq(t.id, id),
+        columns: {
+          organizationId: true,
+        },
+      });
+      if (!org) return c.json({ message: "user not found" }, 404);
+
       const feature = await db.query.featureFlags.findFirst({
-        where: (t) => eq(t.featureKey, key),
+        where: (t) => and(eq(t.featureKey, key), eq(t.organizationId, org.organizationId)),
         columns: {
           isEnabled: true,
         },

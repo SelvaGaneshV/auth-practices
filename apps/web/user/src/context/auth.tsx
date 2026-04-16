@@ -16,7 +16,7 @@ const AuthContext = createContext<AuthState | null>(null);
 
 const authOptions = queryOptions({
   queryKey: ["auth"],
-  queryFn: async () => await parseResponse(rpc["super-admin"].introspect.$get()),
+  queryFn: async () => await parseResponse(rpc.user.introspect.$get()),
   throwOnError: false,
   retry: false,
 });
