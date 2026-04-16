@@ -1,5 +1,5 @@
 {
-  "name": "@auth-practices/server",
+  "name": "server",
   "type": "module",
   "main": "src/index.ts",
   "scripts": {
@@ -11,21 +11,16 @@
     "db:seed": "tsx src/seed.ts"
   },
   "dependencies": {
+    "@auth-practices/api": "workspace:*",
     "@auth-practices/db": "workspace:*",
     "@auth-practices/env": "workspace:*",
     "@hono/node-server": "^1.19.14",
-    "@hono/zod-validator": "^0.7.6",
     "drizzle-orm": "catalog:",
-    "bcryptjs": "^3.0.3",
     "dotenv": "catalog:",
-    "hono": "catalog:",
-    "jsonwebtoken": "^9.0.3",
-    "zod": "catalog:"
+    "hono": "catalog:"
   },
   "devDependencies": {
     "@auth-practices/config": "workspace:*",
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "catalog:",
     "tsdown": "^0.21.7",
     "tsx": "^4.21.0",
     "typescript": "^6.0.2"

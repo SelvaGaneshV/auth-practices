@@ -1,4 +1,4 @@
-import { parseResponse, rpc } from "@auth-practices/api";
+import { parseResponse, rpc } from "@auth-practices/rpc";
 import { Button } from "@auth-practices/ui/components/button";
 import {
   Field,

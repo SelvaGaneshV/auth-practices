@@ -1,5 +1,5 @@
 import { createMiddleware } from "hono/factory";
-import type { AuthMiddlewareState } from "~/types";
+import type { AuthMiddlewareState } from "../types";
 
 export const adminAuthMiddleware = createMiddleware<AuthMiddlewareState>(async (c, next) => {
   const user = c.var.user;

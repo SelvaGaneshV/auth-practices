@@ -6,10 +6,10 @@ import { eq, sql } from "drizzle-orm";
 import { Hono } from "hono";
 import { setCookie } from "hono/cookie";
 import z from "zod";
-import { authMiddleware } from "~/middleware/auth-middleware";
-import { superAdminAuthMiddleware } from "~/middleware/super-admin-auth-middleware";
-import { orgCodeSchema } from "~/schema";
-import { signToken } from "~/utils/jwt";
+import { authMiddleware } from "../middleware/auth-middleware";
+import { superAdminAuthMiddleware } from "../middleware/super-admin-auth-middleware";
+import { orgCodeSchema } from "../schema";
+import { signToken } from "../utils/jwt";
 
 export const superAdmin = new Hono()
   .post(

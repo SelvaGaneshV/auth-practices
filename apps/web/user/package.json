@@ -1,5 +1,5 @@
 {
-  "name": "@auth-practices/user",
+  "name": "user",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -11,7 +11,7 @@
     "check-types": "vite build && tsc --noEmit"
   },
   "dependencies": {
-    "@auth-practices/api": "workspace:*",
+    "@auth-practices/rpc": "workspace:*",
     "@auth-practices/env": "workspace:*",
     "@auth-practices/ui": "workspace:*",
     "@tanstack/react-query": "catalog:",

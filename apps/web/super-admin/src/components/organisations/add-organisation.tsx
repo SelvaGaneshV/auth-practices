@@ -16,7 +16,7 @@ import { Spinner } from "@auth-practices/ui/components/spinner";
 import { useForm } from "@tanstack/react-form";
 import { z } from "zod";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { parseResponse, rpc } from "@auth-practices/api";
+import { parseResponse, rpc } from "@auth-practices/rpc";
 import { useState } from "react";
 
 export const organisationSchema = z.object({

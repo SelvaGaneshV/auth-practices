@@ -1,4 +1,4 @@
-import { parseResponse, rpc } from "@auth-practices/api";
+import { parseResponse, rpc } from "@auth-practices/rpc";
 import {
   Pagination,
   PaginationContent,

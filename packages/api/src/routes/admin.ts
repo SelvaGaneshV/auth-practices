@@ -6,11 +6,11 @@ import { Hono } from "hono";
 import { setCookie } from "hono/cookie";
 import { env } from "process";
 import z from "zod";
-import { adminAuthMiddleware } from "~/middleware/admin-auth-middleware";
-import { authMiddleware } from "~/middleware/auth-middleware";
-import { orgCodeSchema } from "~/schema";
-import { comparePassword, hashPassword } from "~/utils/hash";
-import { signToken } from "~/utils/jwt";
+import { adminAuthMiddleware } from "../middleware/admin-auth-middleware";
+import { authMiddleware } from "../middleware/auth-middleware";
+import { orgCodeSchema } from "../schema";
+import { comparePassword, hashPassword } from "../utils/hash";
+import { signToken } from "../utils/jwt";
 
 export const admin = new Hono()
   .post(

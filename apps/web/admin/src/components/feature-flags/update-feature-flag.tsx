@@ -1,4 +1,4 @@
-import { parseResponse, rpc, type DetailedError } from "@auth-practices/api";
+import { parseResponse, rpc, type DetailedError } from "@auth-practices/rpc";
 import { Button } from "@auth-practices/ui/components/button";
 import { Checkbox } from "@auth-practices/ui/components/checkbox";
 import {

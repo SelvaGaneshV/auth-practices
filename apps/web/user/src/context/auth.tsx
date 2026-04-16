@@ -1,6 +1,6 @@
 import { queryOptions, useQuery, useQueryClient } from "@tanstack/react-query";
 import { createContext, useContext, type FC, type ReactNode } from "react";
-import { rpc, parseResponse } from "@auth-practices/api";
+import { rpc, parseResponse } from "@auth-practices/rpc";
 export interface AuthState {
   isAuthPending: boolean;
   auth?: boolean;

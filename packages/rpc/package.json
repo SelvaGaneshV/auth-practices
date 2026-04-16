@@ -1,5 +1,5 @@
 {
-  "name": "@auth-practices/api",
+  "name": "@auth-practices/rpc",
   "type": "module",
   "exports": {
     ".": {
@@ -11,17 +11,12 @@
   },
   "dependencies": {
     "@auth-practices/db": "workspace:*",
+    "@auth-practices/api": "workspace:*",
     "@auth-practices/env": "workspace:*",
     "hono": "catalog:",
-    "drizzle-orm": "catalog:",
-    "@hono/zod-validator": "^0.7.6",
-    "bcryptjs": "^3.0.3",
-    "jsonwebtoken": "^9.0.3",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@types/jsonwebtoken": "^9.0.10",
-    "@types/node": "catalog:",
     "@auth-practices/config": "workspace:*",
     "typescript": "^6.0.2"
   }

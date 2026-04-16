@@ -1,7 +1,7 @@
 import { getCookie } from "hono/cookie";
 import { createMiddleware } from "hono/factory";
-import type { AuthMiddlewareState } from "~/types";
-import { verifyToken } from "~/utils/jwt";
+import type { AuthMiddlewareState } from "../types";
+import { verifyToken } from "../utils/jwt";
 
 export const authMiddleware = createMiddleware<AuthMiddlewareState>(async (c, next) => {
   const token = getCookie(c, "a_tk");

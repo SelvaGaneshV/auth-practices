@@ -114,6 +114,9 @@ importers:
 
   apps/server:
     dependencies:
+      '@auth-practices/api':
+        specifier: workspace:*
+        version: link:../../packages/api
       '@auth-practices/db':
         specifier: workspace:*
         version: link:../../packages/db
@@ -123,12 +126,6 @@ importers:
       '@hono/node-server':
         specifier: ^1.19.14
         version: 1.19.14(hono@4.12.12)
-      '@hono/zod-validator':
-        specifier: ^0.7.6
-        version: 0.7.6(hono@4.12.12)(zod@4.3.6)
-      bcryptjs:
-        specifier: ^3.0.3
-        version: 3.0.3
       dotenv:
         specifier: 'catalog:'
         version: 17.4.1
@@ -138,22 +135,10 @@ importers:
       hono:
         specifier: 'catalog:'
         version: 4.12.12
-      jsonwebtoken:
-        specifier: ^9.0.3
-        version: 9.0.3
-      zod:
-        specifier: 'catalog:'
-        version: 4.3.6
     devDependencies:
       '@auth-practices/config':
         specifier: workspace:*
         version: link:../../packages/config
-      '@types/jsonwebtoken':
-        specifier: ^9.0.10
-        version: 9.0.10
-      '@types/node':
-        specifier: 'catalog:'
-        version: 22.19.17
       tsdown:
         specifier: ^0.21.7
         version: 0.21.7(@emnapi/core@1.9.2)(@emnapi/runtime@1.9.2)(typescript@6.0.2)
@@ -166,12 +151,12 @@ importers:
 
   apps/web/admin:
     dependencies:
-      '@auth-practices/api':
-        specifier: workspace:*
-        version: link:../../../packages/api
       '@auth-practices/env':
         specifier: workspace:*
         version: link:../../../packages/env
+      '@auth-practices/rpc':
+        specifier: workspace:*
+        version: link:../../../packages/rpc
       '@auth-practices/ui':
         specifier: workspace:*
         version: link:../../../packages/ui
@@ -245,12 +230,12 @@ importers:
 
   apps/web/super-admin:
     dependencies:
-      '@auth-practices/api':
-        specifier: workspace:*
-        version: link:../../../packages/api
       '@auth-practices/env':
         specifier: workspace:*
         version: link:../../../packages/env
+      '@auth-practices/rpc':
+        specifier: workspace:*
+        version: link:../../../packages/rpc
       '@auth-practices/ui':
         specifier: workspace:*
         version: link:../../../packages/ui
@@ -324,12 +309,12 @@ importers:
 
   apps/web/user:
     dependencies:
-      '@auth-practices/api':
-        specifier: workspace:*
-        version: link:../../../packages/api
       '@auth-practices/env':
         specifier: workspace:*
         version: link:../../../packages/env
+      '@auth-practices/rpc':
+        specifier: workspace:*
+        version: link:../../../packages/rpc
       '@auth-practices/ui':
         specifier: workspace:*
         version: link:../../../packages/ui
@@ -400,19 +385,40 @@ importers:
 
   packages/api:
     dependencies:
+      '@auth-practices/db':
+        specifier: workspace:*
+        version: link:../db
       '@auth-practices/env':
         specifier: workspace:*
         version: link:../env
-      '@auth-practices/server':
-        specifier: workspace:*
-        version: link:../../apps/server
+      '@hono/zod-validator':
+        specifier: ^0.7.6
+        version: 0.7.6(hono@4.12.12)(zod@4.3.6)
+      bcryptjs:
+        specifier: ^3.0.3
+        version: 3.0.3
+      drizzle-orm:
+        specifier: 'catalog:'
+        version: 0.45.2(@libsql/client@0.15.15)
       hono:
         specifier: 'catalog:'
         version: 4.12.12
+      jsonwebtoken:
+        specifier: ^9.0.3
+        version: 9.0.3
+      zod:
+        specifier: 'catalog:'
+        version: 4.3.6
     devDependencies:
       '@auth-practices/config':
         specifier: workspace:*
         version: link:../config
+      '@types/jsonwebtoken':
+        specifier: ^9.0.10
+        version: 9.0.10
+      '@types/node':
+        specifier: 'catalog:'
+        version: 22.19.17
       typescript:
         specifier: ^6.0.2
         version: 6.0.2
@@ -468,6 +474,31 @@ importers:
       '@types/node':
         specifier: 'catalog:'
         version: 22.19.17
+      typescript:
+        specifier: ^6.0.2
+        version: 6.0.2
+
+  packages/rpc:
+    dependencies:
+      '@auth-practices/api':
+        specifier: workspace:*
+        version: link:../api
+      '@auth-practices/db':
+        specifier: workspace:*
+        version: link:../db
+      '@auth-practices/env':
+        specifier: workspace:*
+        version: link:../env
+      hono:
+        specifier: 'catalog:'
+        version: 4.12.12
+      zod:
+        specifier: 'catalog:'
+        version: 4.3.6
+    devDependencies:
+      '@auth-practices/config':
+        specifier: workspace:*
+        version: link:../config
       typescript:
         specifier: ^6.0.2
         version: 6.0.2

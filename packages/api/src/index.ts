@@ -1,11 +1,41 @@
-import { hc, parseResponse, type DetailedError } from "hono/client";
-import type { Api } from "@auth-practices/server";
-import { env } from "@auth-practices/env/web";
+import { env } from "@auth-practices/env/server";
+import { Hono } from "hono";
+import { cors } from "hono/cors";
+import { logger } from "hono/logger";
+import { superAdmin } from "./routes/super-admin";
+import { admin } from "./routes/admin";
 
-const rpc = hc<Api>(env.VITE_SERVER_URL, {
-  init: {
-    credentials: "include",
-  },
-});
+export const createApi = () => {
+  const app = new Hono()
+    .use(logger())
+    .use(
+      "/*",
+      cors({
+        origin: [env.SUPER_ADMIN_CORS_ORGIN, env.ADMIN_CORS_ORGIN, env.USER_CORS_ORGIN],
+        credentials: true,
+        allowMethods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
+      }),
+    )
+    .use(
+      "/super-admin/*",
+      cors({
+        origin: env.SUPER_ADMIN_CORS_ORGIN,
+        credentials: true,
+        allowMethods: ["GET", "POST", "OPTIONS"],
+      }),
+    )
+    .route("/super-admin", superAdmin)
+    .use(
+      "/admin/*",
+      cors({
+        origin: env.ADMIN_CORS_ORGIN,
+        credentials: true,
+        allowMethods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
+      }),
+    )
+    .route("/admin", admin);
 
-export { parseResponse, rpc, type DetailedError };
+  return app;
+};
+
+export type ApiType = ReturnType<typeof createApi>;
