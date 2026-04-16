@@ -3,6 +3,7 @@ import { cors } from "hono/cors";
 import { logger } from "hono/logger";
 import { admin } from "./routes/admin";
 import { superAdmin } from "./routes/super-admin";
+import { user } from "./routes/user";
 
 export const createApi = (config: {
   SUPER_ADMIN_CORS_ORGIN: string;
@@ -36,7 +37,16 @@ export const createApi = (config: {
         allowMethods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
       }),
     )
-    .route("/admin", admin);
+    .route("/admin", admin)
+    .use(
+      "/user/*",
+      cors({
+        origin: config.USER_CORS_ORGIN,
+        credentials: true,
+        allowMethods: ["GET", "POST", "OPTIONS", "PATCH", "DELETE"],
+      }),
+    )
+    .route("/user", user);
 
   return app;
 };

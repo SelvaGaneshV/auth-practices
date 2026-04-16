@@ -1,9 +1,8 @@
-import { parseResponse, rpc, type DetailedError } from "@auth-practices/rpc";
+import { parseResponse, rpc } from "@auth-practices/rpc";
 import { Button } from "@auth-practices/ui/components/button";
 import {
   Field,
   FieldDescription,
-  FieldError,
   FieldGroup,
   FieldLabel,
   FieldLegend,
@@ -11,15 +10,12 @@ import {
 } from "@auth-practices/ui/components/field";
 import { Input } from "@auth-practices/ui/components/input";
 import { Spinner } from "@auth-practices/ui/components/spinner";
+import { useForm } from "@tanstack/react-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { createFileRoute, Link, Navigate } from "@tanstack/react-router";
+import { createFileRoute, Navigate } from "@tanstack/react-router";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
 import { useAuth } from "~/context/auth";
-import { useForm } from "@tanstack/react-form";
-import { Label } from "@auth-practices/ui/components/label";
-import { toast } from "sonner";
-
 export const Route = createFileRoute("/sign-in")({
   component: RouteComponent,
 });
@@ -29,21 +25,15 @@ function RouteComponent() {
   const { auth } = useAuth();
   const [showPass, setShowPass] = useState(false);
   const { mutateAsync } = useMutation({
-    mutationFn: async (v: { email: string; password: string; orgCode: string }) =>
-      await parseResponse(rpc.admin["sigin-in"].$post({ json: v })),
+    mutationFn: async ({ name, password }: { name: string; password: string }) =>
+      await parseResponse(rpc["super-admin"].login.$post({ json: { name, password } })),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["auth"], exact: true });
-    },
-    onError: (e: DetailedError) => {
-      if (typeof e.detail?.data?.message === "string") {
-        toast.error(e.detail?.data?.message);
-      }
     },
   });
   const form = useForm({
     defaultValues: {
-      orgCode: "",
-      email: "",
+      name: "",
       password: "",
     },
     onSubmit: async ({ value }) => {
@@ -55,7 +45,7 @@ function RouteComponent() {
 
   return (
     <div className="flex items-center justify-center min-h-screen w-full px-4">
-      <div className="w-full max-w-sm border p-4 rounded-md">
+      <div className="w-full max-w-md">
         <form
           onSubmit={(e) => {
             e.preventDefault();
@@ -66,41 +56,19 @@ function RouteComponent() {
         >
           <FieldGroup>
             <FieldSet>
-              <FieldLegend>Admin Sign-in</FieldLegend>
+              <FieldLegend>Super Admin Sign-in</FieldLegend>
               <FieldDescription>
-                Enter your credentials to continue to the admin panel
+                Enter your credentials to continue to the super admin panel
               </FieldDescription>
 
               <div className="space-y-4 mt-4">
-                <form.Field name="orgCode">
-                  {(field) => {
-                    const isInvalid = field.state.meta.isTouched && !field.state.meta.isValid;
-
-                    return (
-                      <Field data-invalid={isInvalid}>
-                        <Label htmlFor="org-code">Organisation Code</Label>
-                        <Input
-                          id="org-code"
-                          prefix="OG"
-                          placeholder="OGXXX"
-                          name={field.name}
-                          value={field.state.value}
-                          onBlur={field.handleBlur}
-                          onChange={(e) => field.handleChange(e.target.value)}
-                        />
-                        {isInvalid && <FieldError errors={field.state.meta.errors} />}
-                      </Field>
-                    );
-                  }}
-                </form.Field>
-                <form.Field name="email">
+                <form.Field name="name">
                   {(field) => (
                     <Field>
-                      <FieldLabel htmlFor="email">Email</FieldLabel>
+                      <FieldLabel htmlFor="name">Name</FieldLabel>
                       <Input
-                        id="email"
-                        placeholder="Type your email"
-                        type="email"
+                        id="name"
+                        placeholder="Type your name"
                         name={field.name}
                         value={field.state.value}
                         onBlur={field.handleBlur}
@@ -144,17 +112,10 @@ function RouteComponent() {
             </FieldSet>
             <form.Subscribe selector={(state) => [state.canSubmit, state.isSubmitting]}>
               {([canSubmit, isSubmitting]) => (
-                <Field orientation="vertical" className="pt-4 items-center">
+                <Field orientation="horizontal" className="pt-4">
                   <Button disabled={!canSubmit} type="submit" className="w-full">
                     {isSubmitting ? <Spinner /> : "Sign In"}
                   </Button>
-                  <div className="w-full text-xs text-muted-foreground text-center">
-                    {" "}
-                    Dont have account yet ?{" "}
-                    <Link to="/sign-up" className="hover:underline">
-                      sign-up{" "}
-                    </Link>
-                  </div>
                 </Field>
               )}
             </form.Subscribe>

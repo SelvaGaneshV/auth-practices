@@ -10,7 +10,7 @@ const queryClient = new QueryClient({
   mutationCache: new MutationCache({
     onError: (e) => {
       if (e.message.includes("401")) {
-        redirect({ to: "/sigin-in" });
+        redirect({ to: "/sign-in" });
       }
     },
   }),

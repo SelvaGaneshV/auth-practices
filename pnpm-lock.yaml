@@ -318,6 +318,9 @@ importers:
       '@auth-practices/ui':
         specifier: workspace:*
         version: link:../../../packages/ui
+      '@tanstack/react-form':
+        specifier: 'catalog:'
+        version: 1.29.0(react-dom@19.2.5(react@19.2.5))(react@19.2.5)
       '@tanstack/react-query':
         specifier: 'catalog:'
         version: 5.99.0(react@19.2.5)

@@ -6,9 +6,12 @@ async function seed() {
 
   await db
     .insert(roles)
-    .values({
-      role: "ORG_ADMIN",
-    })
+    .values([
+      {
+        role: "ORG_ADMIN",
+      },
+      { role: "ORG_USER" },
+    ])
     .onConflictDoNothing();
 
   console.log("✅ Seeding complete.");
