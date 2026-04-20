@@ -1,5 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "framework": "hono",
-  "buildCommand": "pnpm -w turbo run build --filter=server..."
+  "buildCommand": "pnpm -w turbo run build --filter=server...",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/api" }
+  ]
 }
