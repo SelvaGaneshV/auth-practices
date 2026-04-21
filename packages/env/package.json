@@ -4,16 +4,8 @@
   "private": true,
   "type": "module",
   "exports": {
-    "./server": {
-      "development": "./src/server.ts",
-      "types": "./dist/server.d.ts",
-      "import": "./dist/server.js",
-      "default": "./dist/server.js"
-    },
+    "./server": "./src/server.ts",
     "./web": "./src/web.ts"
-  },
-  "scripts": {
-    "build": "tsdown"
   },
   "dependencies": {
     "@t3-oss/env-core": "^0.13.11",
